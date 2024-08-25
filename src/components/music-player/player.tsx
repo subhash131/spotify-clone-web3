@@ -12,7 +12,6 @@ import { useStateContext } from "@/state-provider";
 
 const Player = () => {
   const { currentSong, setCurrentSong } = useStateContext();
-  console.log("🚀 ~ Player ~ currentSong:", currentSong);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [progress, setProgress] = useState(0);
 
@@ -28,11 +27,6 @@ const Player = () => {
     // Return the formatted duration as min:sec
     return `${minutes}:${formattedSecs}`;
   }
-
-  // Example usage
-  const durationInSeconds = 141.635906;
-  const formattedDuration = formatDuration(durationInSeconds);
-  console.log(formattedDuration); // Outputs: "2:21"
 
   const handleControls = (e: React.MouseEvent) => {
     const role = (e.target as HTMLAudioElement).getAttribute("data-role");
