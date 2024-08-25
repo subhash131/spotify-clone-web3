@@ -86,9 +86,9 @@ const Navbar = () => {
       <div className="flex h-full items-center justify-center w-full gap-4">
         <button className="h-12 w-12 bg-[#1F1F1F] cursor-pointer relative group rounded-full flex items-center justify-center hover:scale-105 transition-transform">
           <GoHomeFill fill="white" size={28} />
-          <p className="absolute -bottom-8 group-hover:visible invisible  px-2 py-1 text-xs bg-[#1f1f1f] rounded-md">
+          <div className="absolute -bottom-8 group-hover:visible invisible  px-2 py-1 text-xs bg-[#1f1f1f] rounded-md">
             Home
-          </p>
+          </div>
         </button>
         <div className="w-[30rem] h-14 bg-[#1f1f1f] hover:border border-[#4c4c4c] hover:bg-[#323232] rounded-full transition-all flex items-center justify-center group px-4">
           <IoSearch
