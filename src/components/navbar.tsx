@@ -1,7 +1,8 @@
 "use client";
 import { abi } from "@/contract/abi";
+import { useStateContext } from "@/state-provider";
 import Image from "next/image";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { GoHomeFill } from "react-icons/go";
 import { IoSearch } from "react-icons/io5";
 import { toast } from "sonner";
@@ -16,6 +17,7 @@ import {
 const Navbar = () => {
   const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
 
+  const { setIsSubscribed } = useStateContext();
   const { address } = useAccount();
   const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
@@ -33,6 +35,10 @@ const Navbar = () => {
     address: `0x${contractAddress}`,
     functionName: "subscriptionPrice",
   });
+
+  useEffect(() => {
+    if (userData) setIsSubscribed((userData as any).isSubscribed);
+  }, [userData]);
 
   const { writeContract } = useWriteContract();
 

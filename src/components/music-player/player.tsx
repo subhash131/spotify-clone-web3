@@ -9,22 +9,19 @@ import {
   FaRepeat,
 } from "react-icons/fa6";
 import { useStateContext } from "@/state-provider";
+import { toast } from "sonner";
 
 const Player = () => {
-  const { currentSong, setCurrentSong } = useStateContext();
+  const { currentSong, setCurrentSong, isSubscribed } = useStateContext();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [progress, setProgress] = useState(0);
 
   function formatDuration(seconds: number) {
     if (!seconds) return "0:00";
-    // Calculate minutes and seconds
     const minutes = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
-
-    // Format seconds to always be two digits
     const formattedSecs = secs.toString().padStart(2, "0");
 
-    // Return the formatted duration as min:sec
     return `${minutes}:${formattedSecs}`;
   }
 
@@ -60,17 +57,25 @@ const Player = () => {
       const newTime =
         audioRef.current &&
         (audioRef.current.currentTime / audioRef.current.duration) * 100;
+      if (!isSubscribed) {
+        if (newTime && newTime >= 5) {
+          toast.error("Subscribe to listen the full song..!");
+          setCurrentSong((prev) => prev && { ...prev, playing: false });
+          clearInterval(interval);
+        }
+      }
       setProgress(newTime || 0);
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [currentSong?.songId]);
 
   useEffect(() => {
     if (!audioRef.current || !currentSong) return;
     audioRef.current.src = currentSong.songUrl;
     audioRef.current.play();
     setCurrentSong((prev) => prev && { ...prev, playing: true });
-  }, [currentSong?.songUrl]);
+    setProgress(0);
+  }, [currentSong?.songId]);
 
   return (
     <div className="w-full h-full flex items-center justify-center flex-col">
