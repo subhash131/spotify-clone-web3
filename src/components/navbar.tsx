@@ -114,7 +114,7 @@ const Navbar = () => {
         {address ? (
           <>
             {userData && (userData as any).username ? (
-              <button className="h-12 w-12 bg-[#1f1f1f] cursor-pointer relative group rounded-full flex items-center justify-center hover:scale-105 transition-transform">
+              <div className="h-12 w-12 bg-[#1f1f1f] cursor-pointer relative group rounded-full flex items-center justify-center hover:scale-105 transition-transform">
                 <div className="bg-orange-400 size-8 rounded-full grid place-content-center">
                   {(userData as any).username.substring(0, 1).toUpperCase()}
                 </div>
@@ -124,7 +124,7 @@ const Navbar = () => {
                 >
                   logout
                 </button>
-              </button>
+              </div>
             ) : (
               <div className="relative">
                 <button
